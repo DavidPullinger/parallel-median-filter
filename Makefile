@@ -10,7 +10,7 @@ TESTDIR = testing
 $(BINDIR)/%.class:$(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
 
-CLASSES = SerialMedianFilter.class
+CLASSES = MedianFilter.class SerialMedianFilter.class
 CLASS_FILES = $(CLASSES:%.class=$(BINDIR)/%.class)
 
 default: $(CLASS_FILES)

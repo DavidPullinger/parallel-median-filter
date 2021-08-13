@@ -1,6 +1,1 @@
-5
-0 2.0
-1 6.0
-2 6.0
-3 3.0
-4 1.0
+FILE NOT FOUND: data/sampleInput1sa00.txt (No such file or directory)
