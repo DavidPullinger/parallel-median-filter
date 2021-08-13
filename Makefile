@@ -19,4 +19,4 @@ clean:
 	 rm $(BINDIR)/*.class
 
 run: $(CLASS_FILES)
-	java -cp $(BINDIR) SerialMedianFilter $(args) > out/$(args).txt
+	java -cp $(BINDIR) SerialMedianFilter $(in) $(width) $(out) > out/$(out)
