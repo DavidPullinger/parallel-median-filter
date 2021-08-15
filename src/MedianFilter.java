@@ -38,6 +38,37 @@ public class MedianFilter {
         return (n % 2 != 0) ? numbers[((n + 1) / 2 - 1)] : (numbers[n / 2 - 1] + numbers[n / 2]) / 2;
     }
 
+    protected static void prefix(int filterWidth, int border) {
+        for (int i = 0; i < border; i++) {
+            double d = Math.round(data[i] * 1e5) / 1e5;
+            System.out.println(i + " " + String.format("%.5f", d));
+        }
+        // if filter width is even we need one more element for prefix border
+        if (filterWidth % 2 == 0) {
+            double d = Math.round(data[border] * 1e5) / 1e5;
+            System.out.println(border + " " + String.format("%.5f", d));
+        }
+    }
+
+    protected static void suffix(int filterWidth, int border) {
+        for (int i = data.length - border; i < data.length; i++) {
+            double d = Math.round(data[i] * 1e5) / 1e5;
+            System.out.println(i + " " + String.format("%.5f", d));
+        }
+    }
+
+    protected static void medianFilter(int filterWidth, int border) {
+        for (int i = 0; i <= data.length - filterWidth; i++) {
+            // fill up temp array with raw data from index i to index i+filter width
+            Double[] temp = new Double[filterWidth];
+            for (int j = i; j < i + filterWidth; j++) {
+                temp[j - i] = data[j];
+            }
+            // add median to correct index of processed data
+            processedData[i] = median(temp);
+        }
+    }
+
     protected static void myAssert(boolean expr) {
         if (!expr) {
             System.out.println("Width must be between 3 and 21 inclusive.");
