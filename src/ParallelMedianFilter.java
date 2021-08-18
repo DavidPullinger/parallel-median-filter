@@ -29,18 +29,26 @@ public class ParallelMedianFilter extends MedianFilter {
 
     private static final ForkJoinPool fjPool = new ForkJoinPool();
 
+    /**
+     * 
+     * @param filterWidth
+     */
     private static void parallelMedianFilter(int filterWidth) {
         fjPool.invoke(new MedianFilterTask(0, data.length - filterWidth, filterWidth));
     }
 
+    /**
+     * Reads in arguments from command line before it reads, process and outputs
+     * data. Processing is done via a parallel median filter
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         // get args from command line
         String fileName = args[0];
         int filterWidth = Integer.parseInt(args[1]);
         int border = (int) Math.floor((filterWidth - 1) / 2.0);
-        int offset = 0;
-        if (filterWidth % 2 == 0)
-            offset = 1;
+        int offset = (filterWidth % 2 == 0) ? 1 : 0; // needed for output
 
         // assert filter width length
         myAssert(filterWidth <= 21 && filterWidth >= 3);
@@ -53,6 +61,7 @@ public class ParallelMedianFilter extends MedianFilter {
             parallelMedianFilter(filterWidth);
             System.out.println(System.nanoTime() - startTime);
         }
+
         // output processed data
         /*
          * System.out.println(processedData.length); prefix(filterWidth, border); for
