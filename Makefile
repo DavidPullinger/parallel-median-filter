@@ -10,7 +10,7 @@ TESTDIR = testing
 $(BINDIR)/%.class:$(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
 
-CLASSES = MedianFilter.class SerialMedianFilter.class
+CLASSES = MedianFilter.class SerialMedianFilter.class ParallelMedianFilter.class
 CLASS_FILES = $(CLASSES:%.class=$(BINDIR)/%.class)
 
 default: $(CLASS_FILES)
@@ -18,5 +18,8 @@ default: $(CLASS_FILES)
 clean:
 	 rm $(BINDIR)/*.class
 
-run: $(CLASS_FILES)
-	java -cp $(BINDIR) SerialMedianFilter $(in) $(width) $(out) > out/$(out)
+run-ser: $(CLASS_FILES)
+	java -cp $(BINDIR) SerialMedianFilter $(in) $(width) $(out) > out/serial-$(out)
+
+run-par: $(CLASS_FILES)
+	java -cp $(BINDIR) ParallelMedianFilter $(in) $(width) $(out) > out/parallel-$(out)

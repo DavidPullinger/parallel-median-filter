@@ -57,8 +57,9 @@ public class MedianFilter {
         }
     }
 
-    protected static void medianFilter(int filterWidth, int border) {
-        for (int i = 0; i <= data.length - filterWidth; i++) {
+    // MAX : data.length - filterWidth
+    protected static void medianFilter(int filterWidth, int start, int end) {
+        for (int i = start; i <= end; i++) {
             // fill up temp array with raw data from index i to index i+filter width
             Double[] temp = new Double[filterWidth];
             for (int j = i; j < i + filterWidth; j++) {
