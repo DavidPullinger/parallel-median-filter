@@ -19,7 +19,7 @@ clean:
 	 rm $(BINDIR)/*.class
 
 run-ser: $(CLASS_FILES)
-	java -cp $(BINDIR) SerialMedianFilter $(in) $(width) $(out) > out/serial-$(out)
+	java -cp $(BINDIR) SerialMedianFilter $(in) $(width) $(out) >> $(TESTDIR)/serial/$(out)
 
 run-par: $(CLASS_FILES)
-	java -cp $(BINDIR) ParallelMedianFilter $(in) $(width) $(out) > out/parallel-$(out)
+	java -cp $(BINDIR) ParallelMedianFilter $(in) $(width) $(cutoff) $(out) >> $(TESTDIR)/parallel/$(out)

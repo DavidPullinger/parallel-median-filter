@@ -3,8 +3,19 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Arrays;
 
+/**
+ * Facilitates input of raw data, mathematical functions involved in the
+ * processing thereof and output of the processed data. Super class for
+ * {@link SerialMedianFilter} and {@link ParallelMedianFilter}.
+ */
 public class MedianFilter {
+    /**
+     * Raw data read from text file
+     */
     protected static Double[] data;
+    /**
+     * Data that has been processed by a median filter
+     */
     protected static Double[] processedData;
 
     /**
@@ -30,34 +41,53 @@ public class MedianFilter {
         }
     }
 
+    /**
+     * Simple math function to calculate the median of an array of numbers
+     * 
+     * @param numbers array of numbers
+     * @return median of numbers
+     */
     protected static double median(Double[] numbers) {
         // sort numbers in list
         Arrays.sort(numbers);
         int n = numbers.length;
-        // return median, checking where data is odd or even length
-        return (n % 2 != 0) ? numbers[((n + 1) / 2 - 1)] : (numbers[n / 2 - 1] + numbers[n / 2]) / 2;
+        // return median; note numbers is odd length since filter width is
+        // necessarily odd
+        return numbers[((n + 1) / 2 - 1)];
     }
 
-    protected static void prefix(int filterWidth, int border) {
+    /**
+     * Outputs prefix border elements
+     * 
+     * @param border length of border
+     */
+    protected static void prefix(int border) {
         for (int i = 0; i < border; i++) {
             double d = Math.round(data[i] * 1e5) / 1e5;
             System.out.println(i + " " + String.format("%.5f", d));
         }
-        // if filter width is even we need one more element for prefix border
-        if (filterWidth % 2 == 0) {
-            double d = Math.round(data[border] * 1e5) / 1e5;
-            System.out.println(border + " " + String.format("%.5f", d));
-        }
     }
 
-    protected static void suffix(int filterWidth, int border) {
+    /**
+     * Outputs suffix border elements
+     * 
+     * @param border length of border
+     */
+    protected static void suffix(int border) {
         for (int i = data.length - border; i < data.length; i++) {
             double d = Math.round(data[i] * 1e5) / 1e5;
             System.out.println(i + " " + String.format("%.5f", d));
         }
     }
 
-    // MAX : data.length - filterWidth
+    /**
+     * Loops over {@link #data} from start index to end index, calculating the
+     * median at each index
+     * 
+     * @param filterWidth width of median filter
+     * @param start       start index
+     * @param end         end index
+     */
     protected static void medianFilter(int filterWidth, int start, int end) {
         for (int i = start; i <= end; i++) {
             // fill up temp array with raw data from index i to index i+filter width
@@ -65,14 +95,21 @@ public class MedianFilter {
             for (int j = i; j < i + filterWidth; j++) {
                 temp[j - i] = data[j];
             }
-            // add median to correct index of processed data
+            // add median to processed data
             processedData[i] = median(temp);
         }
     }
 
-    protected static void myAssert(boolean expr) {
+    /**
+     * Custom assert which verifies that the filter width is valid and that it is
+     * odd
+     * 
+     * @param filterWidth width of median filter
+     */
+    protected static void myAssert(int filterWidth) {
+        boolean expr = (filterWidth <= 21 && filterWidth >= 3 && filterWidth % 2 != 0);
         if (!expr) {
-            System.out.println("Width must be between 3 and 21 inclusive.");
+            System.out.println("Width must be odd and must be between 3 and 21 inclusive.");
             System.exit(1);
         }
     }
