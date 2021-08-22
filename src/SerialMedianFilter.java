@@ -30,18 +30,16 @@ public class SerialMedianFilter extends MedianFilter {
         // read and process data
         readData("data/" + fileName + ".txt");
         System.gc();
-
-        float startTime = System.nanoTime();
         serialMedianFilter(filterWidth);
-        System.out.println(System.nanoTime() - startTime);
 
         // output processed data
-        /*
-         * System.out.println(processedData.length); prefix(border); for (int i = 0; i
-         * <= processedData.length - filterWidth; i++) { Double d =
-         * Math.round(processedData[i] * 1e5) / 1e5; System.out.println((i + border) +
-         * " " + String.format("%.5f", d)); } suffix(border);
-         */
+        System.out.println(processedData.length);
+        prefix(border);
+        for (int i = 0; i <= processedData.length - filterWidth; i++) {
+            Double d = Math.round(processedData[i] * 1e5) / 1e5;
+            System.out.println((i + border) + " " + String.format("%.5f", d));
+        }
+        suffix(border);
 
     }
 }

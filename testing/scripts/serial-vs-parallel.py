@@ -26,16 +26,23 @@ def process():
     
 
 
-for fileSize in [100,1000,10000,100000]:
+for fileSize in [100,1000,10000,100000,1000000,10000000]:
     for width in [7,15,21]:
-        fileNameSer = "{}-{}-out.txt".format(fileSize,width)
-        #use 2 thread parallel data since it performed best
-        fileNamePar = "{}-{}-{}-out.txt".format(fileSize,width,2) 
+        fileNameSer = "{}/{}-{}-out.txt".format(fileSize,fileSize,width)
+        # use 2 thread parallel data (100 - 100 000)
+        if (fileSize <= 100000):
+            fileNamePar = "{}/{}-{}-{}-out.txt".format(fileSize,fileSize,width,2) 
+        # use 8 thread parallel data (1 000 000)
+        elif(fileSize == 1000000):
+            fileNamePar = "{}/{}-{}-{}-out.txt".format(fileSize,fileSize,width,8) 
+        # use 16 thread parallel data (10 000 000)
+        elif(fileSize == 10000000):
+            fileNamePar = "{}/{}-{}-{}-out.txt".format(fileSize,fileSize,width,16) 
         process()
         # clean up plot
         plt.legend(loc="best")
         plt.ylabel("Time (ns)")
         plt.xlabel("Test number")
         plt.title("Performance of parallel vs serial (Data size: {}, Filter width: {})".format(fileSize,width), pad=16)
-        plt.savefig(pathToFigs+fileNameSer[:-4]+".jpg",dpi=300)
+        plt.savefig(pathToFigs+"{}-{}-out.jpg".format(fileSize,width),dpi=300)
         plt.clf()
