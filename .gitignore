@@ -21,4 +21,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # project specific
-data/
+data/sample*
+out/data/
+gitlog.txt

@@ -6,6 +6,7 @@ JAVAC = /usr/bin/javac
 SRCDIR = src
 BINDIR = bin
 TESTDIR = testing
+OUTPUTDIR = out/data
 
 $(BINDIR)/%.class:$(SRCDIR)/%.java
 	$(JAVAC) -d $(BINDIR)/ -cp $(BINDIR) $<
@@ -19,7 +20,7 @@ clean:
 	 rm $(BINDIR)/*.class
 
 run-ser: $(CLASS_FILES)
-	java -cp $(BINDIR) SerialMedianFilter $(in) $(width) $(out) >> $(TESTDIR)/data/serial/$(out)
+	java -cp $(BINDIR) SerialMedianFilter $(in) $(width) $(out) >> $(OUTPUTDIR)/serial/$(out)
 
 run-par: $(CLASS_FILES)
-	java -cp $(BINDIR) ParallelMedianFilter $(in) $(width) $(cutoff) $(out) >> $(TESTDIR)/data/parallel/$(out)
+	java -cp $(BINDIR) ParallelMedianFilter $(in) $(width) $(cutoff) $(out) >> $(OUTPUTDIR)/parallel/$(out)
